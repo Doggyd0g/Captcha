@@ -1,0 +1,34 @@
+﻿<Window x:Class="TestoOne.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestoOne"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="350"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            <RowDefinition ></RowDefinition>
+            
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" BorderBrush="Red" BorderThickness="1" Margin="25">
+            <TextBlock Text="dfhglshdjf" FontFamily="Segoe Script" Name="Kap" FontSize="25" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+        <TextBox Name="TapeKap" Grid.Row="1" Grid.Column="1" FontSize="25" HorizontalAlignment="Center" Width="200" Height="35" VerticalAlignment="Center"></TextBox>
+        
+        <Button Grid.Column="1" Grid.Row="2" Width="100" Height="100" Content="Проверка" FontSize="20" Name="Proverka" Click="Proverka_Click"></Button>
+
+        <Button Grid.Row="0" Grid.Column="2" Height="100" Width="100"  FontSize="20" Name="Generation" Click="Generation_Click" >
+            <TextBlock TextWrapping="WrapWithOverflow" Text="Генерация Капчи"/>
+        </Button>
+
+    </Grid>
+</Window>

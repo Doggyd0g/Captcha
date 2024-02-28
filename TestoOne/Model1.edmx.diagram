@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="abfb877a6af7489c88170a5fa0db659c" Name="Diagram1">
+        <EntityTypeShape EntityType="PolinaModel.Client" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.Passport" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.Room" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.Servicess" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.TypeDiet" Width="1.5" PointX="3.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.TypeRoom" Width="1.5" PointX="1.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.Zayavka" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PolinaModel.PurchasedService" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="PolinaModel.FK__Passport__ID_Cli__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Zayavka__ID_Clie__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Room__ID_TypeRoo__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Zayavka__ID_Room__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Purchased__ID_Se__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Zayavka__ID_Type__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="PolinaModel.FK__Purchased__ID_Za__47DBAE45" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

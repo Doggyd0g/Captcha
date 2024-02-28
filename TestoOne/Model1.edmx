@@ -1,0 +1,565 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PolinaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Familia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronomic" Type="varchar" MaxLength="50" />
+          <Property Name="DateBirth" Type="date" Nullable="false" />
+          <Property Name="TelNum" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="ID_Passport" />
+          </Key>
+          <Property Name="ID_Passport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Seria" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ID_Client" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Polina.dbo.PurchasedService" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="PurchasedService">
+          <Key>
+            <PropertyRef Name="ID_PurchasedService" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="int" />
+          <Property Name="ID_Services" Type="int" />
+          <Property Name="ID_PurchasedService" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="ID_Room" />
+          </Key>
+          <Property Name="ID_Room" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_TypeRoom" Type="int" Nullable="false" />
+          <Property Name="RoomNumber" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Servicess">
+          <Key>
+            <PropertyRef Name="ID_Services" />
+          </Key>
+          <Property Name="ID_Services" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServicesName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServicesPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypeDiet">
+          <Key>
+            <PropertyRef Name="ID_TypeDiet" />
+          </Key>
+          <Property Name="ID_TypeDiet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DietName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DietPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypeRoom">
+          <Key>
+            <PropertyRef Name="ID_TypeRoom" />
+          </Key>
+          <Property Name="ID_TypeRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeRoomName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypeRoomPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Zayavka" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Client" Type="int" Nullable="false" />
+          <Property Name="ID_TypeDiet" Type="int" />
+          <Property Name="ID_Room" Type="int" Nullable="false" />
+          <Property Name="FinalPrice" Type="float" Nullable="false" />
+          <Property Name="DataZaezd" Type="datetime" Nullable="false" />
+          <Property Name="DataViezd" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Passport__ID_Cli__412EB0B6">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchased__ID_Se__48CFD27E">
+          <End Role="Servicess" Type="Self.Servicess" Multiplicity="0..1" />
+          <End Role="PurchasedService" Type="Self.PurchasedService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicess">
+              <PropertyRef Name="ID_Services" />
+            </Principal>
+            <Dependent Role="PurchasedService">
+              <PropertyRef Name="ID_Services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchased__ID_Za__47DBAE45">
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="0..1" />
+          <End Role="PurchasedService" Type="Self.PurchasedService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zayavka">
+              <PropertyRef Name="ID_Zayavka" />
+            </Principal>
+            <Dependent Role="PurchasedService">
+              <PropertyRef Name="ID_Zayavka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Room__ID_TypeRoo__38996AB5">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="ID_TypeRoom" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="ID_TypeRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Clie__440B1D61">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Room__45F365D3">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="ID_Room" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Type__44FF419A">
+          <End Role="TypeDiet" Type="Self.TypeDiet" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeDiet">
+              <PropertyRef Name="ID_TypeDiet" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_TypeDiet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PolinaModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servicess" EntityType="Self.Servicess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeDiet" EntityType="Self.TypeDiet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeRoom" EntityType="Self.TypeRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchasedService" EntityType="Self.PurchasedService" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PurchasedService].[ID_Zayavka] AS [ID_Zayavka], 
+    [PurchasedService].[ID_Services] AS [ID_Services], 
+    [PurchasedService].[ID_PurchasedService] AS [ID_PurchasedService]
+    FROM [dbo].[PurchasedService] AS [PurchasedService]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Passport__ID_Cli__412EB0B6" Association="Self.FK__Passport__ID_Cli__412EB0B6">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchased__ID_Se__48CFD27E" Association="Self.FK__Purchased__ID_Se__48CFD27E">
+            <End Role="Servicess" EntitySet="Servicess" />
+            <End Role="PurchasedService" EntitySet="PurchasedService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchased__ID_Za__47DBAE45" Association="Self.FK__Purchased__ID_Za__47DBAE45">
+            <End Role="Zayavka" EntitySet="Zayavka" />
+            <End Role="PurchasedService" EntitySet="PurchasedService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Room__ID_TypeRoo__38996AB5" Association="Self.FK__Room__ID_TypeRoo__38996AB5">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Clie__440B1D61" Association="Self.FK__Zayavka__ID_Clie__440B1D61">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Room__45F365D3" Association="Self.FK__Zayavka__ID_Room__45F365D3">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Type__44FF419A" Association="Self.FK__Zayavka__ID_Type__44FF419A">
+            <End Role="TypeDiet" EntitySet="TypeDiet" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PolinaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID_Client" />
+          </Key>
+          <Property Name="ID_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Familia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Patronomic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TelNum" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK__Passport__ID_Cli__412EB0B6" FromRole="Client" ToRole="Passport" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK__Zayavka__ID_Clie__440B1D61" FromRole="Client" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="ID_Passport" />
+          </Key>
+          <Property Name="ID_Passport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Seria" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Number" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Passport__ID_Cli__412EB0B6" FromRole="Passport" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="ID_Room" />
+          </Key>
+          <Property Name="ID_Room" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_TypeRoom" Type="Int32" Nullable="false" />
+          <Property Name="RoomNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TypeRoom" Relationship="Self.FK__Room__ID_TypeRoo__38996AB5" FromRole="Room" ToRole="TypeRoom" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK__Zayavka__ID_Room__45F365D3" FromRole="Room" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="Servicess">
+          <Key>
+            <PropertyRef Name="ID_Services" />
+          </Key>
+          <Property Name="ID_Services" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServicesName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServicesPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PurchasedService" Relationship="Self.FK__Purchased__ID_Se__48CFD27E" FromRole="Servicess" ToRole="PurchasedService" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeDiet">
+          <Key>
+            <PropertyRef Name="ID_TypeDiet" />
+          </Key>
+          <Property Name="ID_TypeDiet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DietName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DietPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK__Zayavka__ID_Type__44FF419A" FromRole="TypeDiet" ToRole="Zayavka" />
+        </EntityType>
+        <EntityType Name="TypeRoom">
+          <Key>
+            <PropertyRef Name="ID_TypeRoom" />
+          </Key>
+          <Property Name="ID_TypeRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeRoomName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypeRoomPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Room__ID_TypeRoo__38996AB5" FromRole="TypeRoom" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Zayavka">
+          <Key>
+            <PropertyRef Name="ID_Zayavka" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <Property Name="ID_TypeDiet" Type="Int32" />
+          <Property Name="ID_Room" Type="Int32" Nullable="false" />
+          <Property Name="FinalPrice" Type="Double" Nullable="false" />
+          <Property Name="DataZaezd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DataViezd" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Client" Relationship="Self.FK__Zayavka__ID_Clie__440B1D61" FromRole="Zayavka" ToRole="Client" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Zayavka__ID_Room__45F365D3" FromRole="Zayavka" ToRole="Room" />
+          <NavigationProperty Name="TypeDiet" Relationship="Self.FK__Zayavka__ID_Type__44FF419A" FromRole="Zayavka" ToRole="TypeDiet" />
+          <NavigationProperty Name="PurchasedService" Relationship="Self.FK__Purchased__ID_Za__47DBAE45" FromRole="Zayavka" ToRole="PurchasedService" />
+        </EntityType>
+        <EntityType Name="PurchasedService">
+          <Key>
+            <PropertyRef Name="ID_PurchasedService" />
+          </Key>
+          <Property Name="ID_Zayavka" Type="Int32" />
+          <Property Name="ID_Services" Type="Int32" />
+          <Property Name="ID_PurchasedService" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Servicess" Relationship="Self.FK__Purchased__ID_Se__48CFD27E" FromRole="PurchasedService" ToRole="Servicess" />
+          <NavigationProperty Name="Zayavka" Relationship="Self.FK__Purchased__ID_Za__47DBAE45" FromRole="PurchasedService" ToRole="Zayavka" />
+        </EntityType>
+        <Association Name="FK__Passport__ID_Cli__412EB0B6">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Clie__440B1D61">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID_Client" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Room__ID_TypeRoo__38996AB5">
+          <End Role="TypeRoom" Type="Self.TypeRoom" Multiplicity="1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeRoom">
+              <PropertyRef Name="ID_TypeRoom" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="ID_TypeRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Room__45F365D3">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="ID_Room" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_Room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchased__ID_Se__48CFD27E">
+          <End Role="Servicess" Type="Self.Servicess" Multiplicity="0..1" />
+          <End Role="PurchasedService" Type="Self.PurchasedService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicess">
+              <PropertyRef Name="ID_Services" />
+            </Principal>
+            <Dependent Role="PurchasedService">
+              <PropertyRef Name="ID_Services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zayavka__ID_Type__44FF419A">
+          <End Role="TypeDiet" Type="Self.TypeDiet" Multiplicity="0..1" />
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeDiet">
+              <PropertyRef Name="ID_TypeDiet" />
+            </Principal>
+            <Dependent Role="Zayavka">
+              <PropertyRef Name="ID_TypeDiet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchased__ID_Za__47DBAE45">
+          <End Role="Zayavka" Type="Self.Zayavka" Multiplicity="0..1" />
+          <End Role="PurchasedService" Type="Self.PurchasedService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zayavka">
+              <PropertyRef Name="ID_Zayavka" />
+            </Principal>
+            <Dependent Role="PurchasedService">
+              <PropertyRef Name="ID_Zayavka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PolinaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Passport" EntityType="Self.Passport" />
+          <EntitySet Name="Room" EntityType="Self.Room" />
+          <EntitySet Name="Servicess" EntityType="Self.Servicess" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypeDiet" EntityType="Self.TypeDiet" />
+          <EntitySet Name="TypeRoom" EntityType="Self.TypeRoom" />
+          <EntitySet Name="Zayavka" EntityType="Self.Zayavka" />
+          <EntitySet Name="PurchasedService" EntityType="Self.PurchasedService" />
+          <AssociationSet Name="FK__Passport__ID_Cli__412EB0B6" Association="Self.FK__Passport__ID_Cli__412EB0B6">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Clie__440B1D61" Association="Self.FK__Zayavka__ID_Clie__440B1D61">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Room__ID_TypeRoo__38996AB5" Association="Self.FK__Room__ID_TypeRoo__38996AB5">
+            <End Role="TypeRoom" EntitySet="TypeRoom" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Room__45F365D3" Association="Self.FK__Zayavka__ID_Room__45F365D3">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchased__ID_Se__48CFD27E" Association="Self.FK__Purchased__ID_Se__48CFD27E">
+            <End Role="Servicess" EntitySet="Servicess" />
+            <End Role="PurchasedService" EntitySet="PurchasedService" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zayavka__ID_Type__44FF419A" Association="Self.FK__Zayavka__ID_Type__44FF419A">
+            <End Role="TypeDiet" EntitySet="TypeDiet" />
+            <End Role="Zayavka" EntitySet="Zayavka" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchased__ID_Za__47DBAE45" Association="Self.FK__Purchased__ID_Za__47DBAE45">
+            <End Role="Zayavka" EntitySet="Zayavka" />
+            <End Role="PurchasedService" EntitySet="PurchasedService" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PolinaModelContainer" CdmEntityContainer="PolinaEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="PolinaModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronomic" ColumnName="Patronomic" />
+                <ScalarProperty Name="DateBirth" ColumnName="DateBirth" />
+                <ScalarProperty Name="TelNum" ColumnName="TelNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passport">
+            <EntityTypeMapping TypeName="PolinaModel.Passport">
+              <MappingFragment StoreEntitySet="Passport">
+                <ScalarProperty Name="ID_Passport" ColumnName="ID_Passport" />
+                <ScalarProperty Name="Seria" ColumnName="Seria" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Room">
+            <EntityTypeMapping TypeName="PolinaModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="ID_Room" ColumnName="ID_Room" />
+                <ScalarProperty Name="ID_TypeRoom" ColumnName="ID_TypeRoom" />
+                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servicess">
+            <EntityTypeMapping TypeName="PolinaModel.Servicess">
+              <MappingFragment StoreEntitySet="Servicess">
+                <ScalarProperty Name="ID_Services" ColumnName="ID_Services" />
+                <ScalarProperty Name="ServicesName" ColumnName="ServicesName" />
+                <ScalarProperty Name="ServicesPrice" ColumnName="ServicesPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PolinaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeDiet">
+            <EntityTypeMapping TypeName="PolinaModel.TypeDiet">
+              <MappingFragment StoreEntitySet="TypeDiet">
+                <ScalarProperty Name="ID_TypeDiet" ColumnName="ID_TypeDiet" />
+                <ScalarProperty Name="DietName" ColumnName="DietName" />
+                <ScalarProperty Name="DietPrice" ColumnName="DietPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeRoom">
+            <EntityTypeMapping TypeName="PolinaModel.TypeRoom">
+              <MappingFragment StoreEntitySet="TypeRoom">
+                <ScalarProperty Name="ID_TypeRoom" ColumnName="ID_TypeRoom" />
+                <ScalarProperty Name="TypeRoomName" ColumnName="TypeRoomName" />
+                <ScalarProperty Name="TypeRoomPrice" ColumnName="TypeRoomPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zayavka">
+            <EntityTypeMapping TypeName="PolinaModel.Zayavka">
+              <MappingFragment StoreEntitySet="Zayavka">
+                <ScalarProperty Name="ID_Zayavka" ColumnName="ID_Zayavka" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="ID_TypeDiet" ColumnName="ID_TypeDiet" />
+                <ScalarProperty Name="ID_Room" ColumnName="ID_Room" />
+                <ScalarProperty Name="FinalPrice" ColumnName="FinalPrice" />
+                <ScalarProperty Name="DataZaezd" ColumnName="DataZaezd" />
+                <ScalarProperty Name="DataViezd" ColumnName="DataViezd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchasedService">
+            <EntityTypeMapping TypeName="PolinaModel.PurchasedService">
+              <MappingFragment StoreEntitySet="PurchasedService">
+                <ScalarProperty Name="ID_Zayavka" ColumnName="ID_Zayavka" />
+                <ScalarProperty Name="ID_Services" ColumnName="ID_Services" />
+                <ScalarProperty Name="ID_PurchasedService" ColumnName="ID_PurchasedService" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
